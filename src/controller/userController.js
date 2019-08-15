@@ -1,3 +1,4 @@
+/* eslint-disable lines-between-class-members */
 /* eslint-disable max-len */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -41,6 +42,34 @@ class userController {
     return res.status(400).json({
       status: 400,
       error: validationError,
+    });
+  }
+  static signIn(req, res) {
+    const {
+      email, password,
+    } = req.body;
+    const foundUser = userModal.find(usr => usr.email === email);
+    if (!foundUser) {
+      return res.status(404).json({
+        status: 404,
+        error: 'user not found',
+      });
+    }
+    const jsToken = jwt.sign({ id: foundUser.id, email: foundUser.email, userType: foundUser.userType }, process.env.SECRET_KEY);
+    const comparePassword = bcrypt.compareSync(password, foundUser.password);
+    if (!comparePassword) {
+      return res.status(401).json({
+        status: 401,
+        error: 'password not matching',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      message: 'User is successfully logged in',
+      token: jsToken,
+      data: {
+        id: foundUser.id, email: foundUser.email, userType: foundUser.userType,
+      },
     });
   }
 }
