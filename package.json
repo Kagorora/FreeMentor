@@ -1,0 +1,41 @@
+{
+  "name": "freementor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kagorora/FreeMentor.git"
+  },
+  "author": "kagorora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kagorora/FreeMentor/issues"
+  },
+  "homepage": "https://github.com/Kagorora/FreeMentor#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "@hapi/joi": "^15.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "bcrypt-nodejs": "0.0.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "dotenv": "^8.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
