@@ -21,16 +21,7 @@ class adminController {
       const foundUser = userModal.find(usr => usr.id === parseInt(userId));
       if (foundUser && foundUser.userType === 'user') {
         const updatedUser = {
-          id: foundUser.id,
-          firstName: foundUser.firstName,
-          lastName: foundUser.lastName,
-          email: foundUser.email,
-          password: foundUser.password,
-          address: foundUser.address,
-          bio: foundUser.bio,
-          occupation: foundUser.occupation,
-          expertise: foundUser.expertise,
-          userType: 'mentor',
+          id: foundUser.id, firstName: foundUser.firstName, lastName: foundUser.lastName, email: foundUser.email, password: foundUser.password, address: foundUser.address, bio: foundUser.bio, occupation: foundUser.occupation, expertise: foundUser.expertise, userType: 'mentor',
         };
         userModal[userModal.indexOf(foundUser)] = updatedUser;
         return res.status(200).json({
