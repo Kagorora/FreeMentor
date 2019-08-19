@@ -89,6 +89,28 @@ class userController {
       error: 'unauthorised route',
     });
   }
+
+  static specificMentor(req, res) {
+    if (req.user.userType === 'user' || req.user.userType === 'user') {
+      const { mentorId } = req.params;
+      // eslint-disable-next-line radix
+      const foundMentors = userModal.find(mentor => mentor.id === parseInt(mentorId));
+      if (foundMentors) {
+        return res.status(200).json({
+          status: 200,
+          data: foundMentors,
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        error: 'mentor not found',
+      });
+    }
+    return res.status(403).json({
+      status: 403,
+      error: 'only admin and user have access',
+    });
+  }
 }
 
 export default userController;

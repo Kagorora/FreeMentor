@@ -5,7 +5,7 @@ const user = [
     firstName: 'ruhimbaza',
     lastName: 'Bertin',
     email: 'ruhimbazab@gmail.com',
-    password: '$2a$10$YtwTzz//X2hnUZiV2ya68.9sRFXJ.EBBNOVEUFCdJix6lwG51uJfG',
+    password: '$2a$10$lifw9U..bfUh0bsk7OopBedeLy6OtlvyvgfnMzPYBwVv8Hv3vh2zW',
     address: 'kigali',
     bio: 'scientist',
     occupation: 'software development',
