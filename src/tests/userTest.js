@@ -122,4 +122,26 @@ describe('User tests', () => {
       });
     done();
   });
+
+  // ==================== view all mentors =============================
+  it('should be able to view all users if admin or user', (done) => {
+    chai.request(server)
+      .get('/api/v1/auth/mentors')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrYWdvcm9yYUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNTY2MjQ1ODY0fQ.vJDcbSko9kqIxWskhk9hfoWhlMQbVGOjlyN9KqQ8M30')
+      .end((err, res) => {
+        res.body.status.should.be.equal(200);
+      });
+    done();
+  });
+
+  it('should not be able to view all users if not admin or user', (done) => {
+    chai.request(server)
+      .get('/api/v1/auth/mentors')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGluZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjI0NjY0OX0.fv6O7PrVOuZ3O72UbJHMoFGAxWn_PZm1-j3nL7F5Ksc')
+      .end((err, res) => {
+        res.body.status.should.be.equal(403);
+        res.body.error.should.be.equal('unauthorised route');
+      });
+    done();
+  });
 });

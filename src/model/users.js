@@ -17,7 +17,7 @@ const user = [
     firstName: 'ahishakiye',
     lastName: 'aline',
     email: 'aline@gmail.com',
-    password: '$2a$10$2J49dApfMilJ9a2fQVP0De18TnQMNXjjVIWad4zTqPYogjhnUT.qi',
+    password: '$2a$10$lifw9U..bfUh0bsk7OopBedeLy6OtlvyvgfnMzPYBwVv8Hv3vh2zW',
     address: 'Nairobi',
     bio: 'researcher',
     occupation: 'advocacy',
