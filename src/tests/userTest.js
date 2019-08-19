@@ -122,39 +122,4 @@ describe('User tests', () => {
       });
     done();
   });
-
-  // =================== view all users =====================================
-
-  it('should be able to view all users if admin', (done) => {
-    chai.request(server)
-      .get('/api/v1/auth/allUsers')
-      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrYWdvcm9yYUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNTY2MjMxODExfQ.xqcTM2MjoCpOPrn92-z37rv6YrATVi5QJTWPZ9nezJk')
-      .end((err, res) => {
-        res.body.status.should.be.equal(200);
-        // res.body.message.should.be.equal('Forbirden route');
-      });
-    done();
-  });
-
-  it('should not be able to view all users if not admin', (done) => {
-    chai.request(server)
-      .get('/api/v1/auth/allUsers')
-      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJtYW56aUphbWVzYkBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjIzMjUyMH0.DMkjrgNQExohIfCFohUfoQ6KDvYoENxvRn-_8gBbZt8')
-      .end((err, res) => {
-        res.body.status.should.be.equal(403);
-        // res.body.message.should.be.equal('Forbirden route');
-      });
-    done();
-  });
-
-  it('should not be able to view all users if token is wrong', (done) => {
-    chai.request(server)
-      .get('/api/v1/auth/allUsers')
-      .set('token', 'ccc')
-      .end((err, res) => {
-        res.body.status.should.be.equal(400);
-        res.body.error.should.be.equal('Authentication failed');
-      });
-    done();
-  });
 });
