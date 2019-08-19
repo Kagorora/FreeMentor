@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable max-len */
 import jwt from 'jsonwebtoken';
@@ -72,6 +73,38 @@ class userController {
       },
     });
   }
+  
+  static allUsers(req, res) {
+    if (req.user.userType === 'admin') {
+      return res.status(200).json({
+        status: 200,
+        data: userModal,  
+      });
+    }
+    return res.status(403).json({
+      status: 403,
+      error: 'Forbirden route',
+    });
+  }
+  // static viewAllMentors(req, res) {
+  //   if (req.user.userType === 'user' || req.user.userType === 'admin') {
+  //     const foundMentors = userModal.filter(user => user.userType === 'mentor');
+  //     if (foundMentors) {
+  //       return res.status(200).json({
+  //         status: 200,
+  //         data: foundMentors,
+  //       });
+  //     }
+  //     return res.status(404).json({
+  //       status: 404,
+  //       error: 'mentor not found',
+  //     });
+  //   }
+  //   return res.status(403).json({
+  //     status: 403,
+  //     error: 'unauthorised route',
+  //   });
+  // }
 }
 
 export default userController;
