@@ -15,9 +15,7 @@ class sessionController {
       sessionModal.push(newSession.value);
       return res.status(201).json({
         status: 201,
-        data: {
-          id: sessionId, mentorId, menteeId: req.user.id, questions, menteeEmail: req.user.email, status: 'pending',
-        },
+        data: newSession,
       });
     }
     return res.status(403).json({
