@@ -30,4 +30,27 @@ describe('session tests', () => {
       });
     done();
   });
+
+  // =================== accept session ==========================
+
+  it('should able to accept session if mentor', (done) => {
+    chai.request(server)
+      .patch('/api/v1/auth/sessions/1/accept')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGluZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjI4MjExOX0.LWIvlLsimOp8FLydgW3mYWKnFDq7zHtuTdFG3_waDgw')
+      .end((err, res) => {
+        res.body.status.should.be.equal(200);
+      });
+    done();
+  });
+
+  it('should not able to accept session if not mentor', (done) => {
+    chai.request(server)
+      .patch('/api/v1/auth/sessions/1/accept')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrYWdvcm9yYUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNTY2MjgyNDk5fQ.Yo_tYWAjo-WV3QhkXYQZTu_z0y5Mgzm2h6CIOEnokzo')
+      .end((err, res) => {
+        res.body.status.should.be.equal(403);
+        res.body.error.should.be.equal('Only mentors are allowed');
+      });
+    done();
+  });
 });

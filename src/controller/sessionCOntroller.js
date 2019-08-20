@@ -15,14 +15,32 @@ class sessionController {
       sessionModal.push(newSession.value);
       return res.status(201).json({
         status: 201,
-        data: {
-          id: sessionId, mentorId, menteeId: req.user.id, questions, menteeEmail: req.user.email, status: 'pending',
-        },
+        data: newSession,
       });
     }
     return res.status(403).json({
       status: 403,
       error: 'Only users can create mentorShip session',
+    });
+  }
+
+  static sessionAccept(req, res) {
+    if (req.user.userType === 'mentor') {
+      const { sessionId } = req.params;
+      // eslint-disable-next-line radix
+      const foundSession = sessionModal.find(ssn => ssn.sessionId === parseInt(sessionId));
+      const updatedSession = {
+        id: foundSession.id, mentorId: foundSession.menteeId, menteeId: foundSession.menteeId, questions: foundSession.questions, status: 'accepted',
+      };
+      sessionModal[sessionModal.indexOf(foundSession)] = updatedSession;
+      return res.status(200).json({
+        status: 200,
+        data: updatedSession,
+      });
+    }
+    return res.status(403).json({
+      status: 403,
+      error: 'Only mentors are allowed',
     });
   }
 }
