@@ -6,10 +6,10 @@ class sessionController {
       const {
         mentorId, questions,
       } = req.body;
-      const sessionId = sessionModal.length + 1;
+      const sId = sessionModal.length + 1;
       // eslint-disable-next-line no-undef
       const newSession = {
-        id: sessionId, mentorId, menteeId: req.user.id, questions, menteeEmail: req.user.email, status: 'pending',
+        id: sId, mentorId, menteeId: req.user.id, questions, menteeEmail: req.user.email, status: 'pending',
       };
       // eslint-disable-next-line no-undef
       sessionModal.push(newSession.value);
@@ -24,23 +24,30 @@ class sessionController {
     });
   }
 
-  static sessionAccept(req, res) {
+  static acceptSession(req, res) {
     if (req.user.userType === 'mentor') {
       const { sessionId } = req.params;
       // eslint-disable-next-line radix
-      const foundSession = sessionModal.find(ssn => ssn.sessionId === parseInt(sessionId));
-      const updatedSession = {
-        id: foundSession.id, mentorId: foundSession.menteeId, menteeId: foundSession.menteeId, questions: foundSession.questions, status: 'accepted',
-      };
-      sessionModal[sessionModal.indexOf(foundSession)] = updatedSession;
-      return res.status(200).json({
-        status: 200,
-        data: updatedSession,
+      const foundSession = sessionModal.find(s => s.sessionId === parseInt(sessionId));
+      if (req.user.id === foundSession.mentorId) {
+        const updatedSession = {
+          sessionId: foundSession.sessionId, mentorId: foundSession.mentorId, menteeId: foundSession.menteeId, questions: foundSession.questions, menteeEmail: foundSession.menteeEmail, status: 'accepted',
+        };
+        sessionModal[sessionModal.indexOf(foundSession)] = updatedSession;
+        return res.status(200).json({
+          status: 200,
+          message: 'session accepted',
+          data: updatedSession,
+        });
+      }
+      return res.status(401).json({
+        status: 401,
+        error: 'Unauthorized operation',
       });
     }
     return res.status(403).json({
       status: 403,
-      error: 'Only mentors are allowed',
+      error: 'Unauthorized access',
     });
   }
 }

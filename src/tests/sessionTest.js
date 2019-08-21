@@ -35,10 +35,11 @@ describe('session tests', () => {
 
   it('should able to accept session if mentor', (done) => {
     chai.request(server)
-      .patch('/api/v1/auth/sessions/1/accept')
-      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGluZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjI4MjExOX0.LWIvlLsimOp8FLydgW3mYWKnFDq7zHtuTdFG3_waDgw')
+      .patch('/api/v1/auth/sessions/2/accept')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGluZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjM2NTE5Mn0.C5jpalm6tuLDc2y2lFdcrNGq5htu8Tjs6QIUrHfv7I0')
       .end((err, res) => {
         res.body.status.should.be.equal(200);
+        res.body.message.should.be.equal('session accepted');
       });
     done();
   });
@@ -46,10 +47,21 @@ describe('session tests', () => {
   it('should not able to accept session if not mentor', (done) => {
     chai.request(server)
       .patch('/api/v1/auth/sessions/1/accept')
-      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrYWdvcm9yYUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNTY2MjgyNDk5fQ.Yo_tYWAjo-WV3QhkXYQZTu_z0y5Mgzm2h6CIOEnokzo')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrYWdvcm9yYUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNTY2MzY2OTEzfQ.bipnLV62xjVSqxvyXXNO9aW4X7lheR6RPkJQ3LWjZpM')
       .end((err, res) => {
         res.body.status.should.be.equal(403);
-        res.body.error.should.be.equal('Only mentors are allowed');
+        res.body.error.should.be.equal('Unauthorized access');
+      });
+    done();
+  });
+
+  it('should not able to accept session if session is not due to that mentor', (done) => {
+    chai.request(server)
+      .patch('/api/v1/auth/sessions/3/accept')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGluZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6Im1lbnRvciIsImlhdCI6MTU2NjM2NzEwNH0.g3LZne6lyk_hs9BkIwK2xqh7n_sGDM2ilNMyhDDSsxA')
+      .end((err, res) => {
+        res.body.status.should.be.equal(401);
+        res.body.error.should.be.equal('Unauthorized operation');
       });
     done();
   });
